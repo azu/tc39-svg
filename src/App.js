@@ -56,9 +56,11 @@ class App extends React.Component {
         };
     }
 
-    componentDidMount() {
-        var AM = 1;
-        this.tim = setInterval(()=> {
+    start() {
+        if (this.time) {
+            return;
+        }
+        this.time = setInterval(()=> {
             if (this.state.processValue >= 100) {
                 // complete spec. and reset progress
                 completeSpecList = specList.filter(spec => {
@@ -111,7 +113,8 @@ class App extends React.Component {
                              width={150}
                 />;
         });
-        return <svg className="App" viewBox="0 0 800 600">
+        return <svg className="App" viewBox="0 0 800 600"
+                    onClick={this.start.bind(this)}>
             <title>TC39 Process</title>
             <StageAxis xRange={xAxisRange} yRange={yAxisRange}/>
             <StageArea xRange={xAreaRange} yRange={yAreaRange}/>
