@@ -27,7 +27,7 @@ export default class SpecItem extends React.Component {
         var levelHeight = 100 / 5;
         var stageY = (5 - this.props.stageLevel) * yRange(levelHeight);
         var x = xRange(this.props.x);
-        return <g>
+        return <g className="SpecItem">
             <rect x={x}
                   y={stageY - marginBottom}
                   width={this.props.width}
@@ -39,9 +39,8 @@ export default class SpecItem extends React.Component {
                   textAnchor="middle"
                   alignmentBaseline="central"
                   dominantBaseline="middle">
-                {this.labelByStage(this.props.stageLevel)}
+                {this.props.proposalName}
             </text>
-
         </g>
     }
 }
