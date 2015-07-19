@@ -1,0 +1,1 @@
+console.error("Error: SyntaxError: Unexpected token b while parsing json file /Users/azu/.ghq/github.com/azu/tc39-svg/package.json");
