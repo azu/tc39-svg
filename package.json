@@ -1,8 +1,8 @@
 {
   "name": "tc39-svg",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Visualize TC39 Process",
+  "main": "src/App.js",
   "dependencies": {
     "array-range": "^1.0.1",
     "d3-scale": "^0.1.1"
@@ -27,5 +27,5 @@
   "bugs": {
     "url": "https://github.com/azu/tc39-svg/issues"
   },
-  "homepage": "https://github.com/azu/tc39-svg#readme"
+  "homepage": "https://github.com/azu/tc39-svg"
 }
