@@ -23,13 +23,13 @@ export default class StageArea extends React.Component {
         var lines = [1, 2, 3, 4].map(index => {
             return <BackgroundLine key={index} x={x} y={lineHeight*index}/>
         });
-        return <g className="BackgroundArea">
-            <rect x={x}
+        return <g className="StageArea">
+            <rect className="StageArea-background" x={x}
                   y={yRange(this.props.y)}
                   width={500-xRange(this.props.x)}
                   height={height}
                   strokeWidth="1" stroke="black"
-                  fill="none"/>
+                  fill="#dadaeb"/>
             {lines}
         </g>;
     }

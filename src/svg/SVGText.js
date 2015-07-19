@@ -89,7 +89,7 @@ module.exports = React.createClass({
     render() {
         return (
             <g>
-                <g ref="hiddenGroupNode" style={{display:"none"}}>
+                <g ref="hiddenGroupNode">
                     <text ref="hiddenTextNode"></text>
                 </g>
                 <g style={{display:"inline"}}>

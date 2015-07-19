@@ -20,7 +20,7 @@ export default class YearAxis extends React.Component {
             <rect x={xRange(0)} y={yRange(0)}
                   width={xRange(this.props.processValue)} height={40}
                   strokeWidth="1" stroke="black"
-                  fill="blue"
+                  fill="#6baed6"
                 />
             <text x={xRange(100)}
                   y={yRange(100)}

@@ -5,7 +5,7 @@ import SpecItem from "./SpecItem"
 export default class ECMAScriptXXXX extends React.Component {
     static get defaultProps() {
         return {
-            specItems: []
+            completeSpecList: []
         };
     }
 
@@ -26,13 +26,21 @@ export default class ECMAScriptXXXX extends React.Component {
                   width={this.props.width}
                   height={this.props.height}
                   strokeWidth="1" stroke="black"
-                  fill="#bcbd22"/>
+                  fill="#e7ba52"/>
             <text x={xRange(50)}
                   y={yRange(10)}
                   textAnchor="middle"
                   alignmentBaseline="central"
                   dominantBaseline="middle">
                 {this.props.versionName}
+            </text>
+            <text x={xRange(50)}
+                  y={yRange(15)}
+                  textAnchor="middle"
+                  alignmentBaseline="central"
+                  dominantBaseline="middle"
+                  fill="#e6550d">
+                New Features
             </text>
             {specItems}
         </g>

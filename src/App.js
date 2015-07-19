@@ -26,7 +26,21 @@ var specList = [
         stageLevel: 0
     }
 ];
-var completeSpecList = [];
+var completeSpecList = [
+    {
+        name: "Promise",
+        stageLevel: 4
+    }, {
+        name: "Generator",
+        stageLevel: 4
+    }, {
+        name: "Modules",
+        stageLevel: 4
+    }, {
+        name: "Arrow Function",
+        stageLevel: 4
+    }
+];
 
 
 function randomUp() {
@@ -38,7 +52,6 @@ class App extends React.Component {
         super(...args);
         this.state = {
             beginYear: 2015,
-            stageLevel: 0,
             processValue: 0
         };
     }
@@ -46,9 +59,6 @@ class App extends React.Component {
     componentDidMount() {
         var AM = 1;
         this.tim = setInterval(()=> {
-            if (this.state.stageLevel == 4) {
-                AM = 0;
-            }
             if (this.state.processValue >= 100) {
                 // complete spec. and reset progress
                 completeSpecList = specList.filter(spec => {
@@ -61,6 +71,10 @@ class App extends React.Component {
                     beginYear: this.state.beginYear + 1,
                     processValue: 0
                 });
+                // finish roop
+                if (specList.length === 0) {
+                    clearInterval(this.tim);
+                }
                 return;
             }
             // 2コづつ
@@ -70,7 +84,6 @@ class App extends React.Component {
                 }
             });
             this.setState({
-                stageLevel: this.state.stageLevel + AM,
                 processValue: this.state.processValue + 10
             });
         }, 1000);
@@ -88,7 +101,7 @@ class App extends React.Component {
 
         var ECMAXRange = linear().domain(TenPercent).range([500, 800]);
         var ECMAYRange = linear().domain(TenPercent).range([0, 500]);
-        var specs = range(Math.min(specList.length, 2)).map(function (dummy,index) {
+        var specs = range(Math.min(specList.length, 2)).map(function (dummy, index) {
             var xSpecItemRange = linear().domain(TenPercent).range([150 * (index + 1), 500]);
             var ySpecItemRange = linear().domain(TenPercent).range([0, 500]);
             return <SpecItem key={specList[index].name}
@@ -96,11 +109,10 @@ class App extends React.Component {
                              stageLevel={specList[index].stageLevel}
                              xRange={xSpecItemRange} yRange={ySpecItemRange}
                              width={150}
-                />
+                />;
         });
         return <svg className="App" viewBox="0 0 800 600">
             <title>TC39 Process</title>
-            {specs}
             <StageAxis xRange={xAxisRange} yRange={yAxisRange}/>
             <StageArea xRange={xAreaRange} yRange={yAreaRange}/>
             <YearAxis xRange={yearXRange} yRange={yearYRange}
@@ -110,6 +122,7 @@ class App extends React.Component {
                         completeSpecList={completeSpecList}
                         width={300} height={500}
                         xRange={ECMAXRange} yRange={ECMAYRange}/>
+            {specs}
         </svg>
     }
 }
