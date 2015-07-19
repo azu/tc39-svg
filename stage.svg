@@ -1,0 +1,30 @@
+<?xml version="1.0" standalone="no"?>
+<svg width="500px" height="500px" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+    <title>viewBoxのサンプル1</title>
+    <rect x="40" y="0" width="500" height="500" stroke="black" fill="none"/>
+        <g font-size="20" fill="red">
+            <text x="0" y="50">
+            Stage 4
+            </text>
+            <text x="0" y="150">
+            Stage 3
+            </text>
+            <text x="0" y="250">
+            Stage 2
+            </text>
+            <text x="0" y="350">
+            Stage 1
+            </text>
+            <text x="0" y="450">
+            Stage 0
+            </text>
+        </g>
+    <g>
+    <path d="M 40 100 H500" stroke="black" stroke-width="1" fill="none" />
+    <path d="M 40 200 H500" stroke="black" stroke-width="1" fill="none" />
+    <path d="M 40 300 H500" stroke="black" stroke-width="1" fill="none" />
+    <path d="M 40 400 H500" stroke="black" stroke-width="1" fill="none" />
+    </g>
+
+    <rect id="rect" x="100" y="25" width="50" height="50" fill="blue" />
+</svg>
