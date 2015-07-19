@@ -10,21 +10,23 @@ class BackgroundLine extends React.Component {
 export default class StageArea extends React.Component {
     static get defaultProps() {
         return {
-            x: 100,
+            x: 0,
             y: 0
         };
     }
 
     render() {
-        var height = 500 - this.props.y;
+        var {xRange, yRange} = this.props;
+        var height = 500 - yRange(this.props.y);
         var lineHeight = height / 5;
+        var x = xRange(this.props.x);
         var lines = [1, 2, 3, 4].map(index => {
-            return <BackgroundLine key={index} x={this.props.x} y={lineHeight*index}/>
+            return <BackgroundLine key={index} x={x} y={lineHeight*index}/>
         });
         return <g className="BackgroundArea">
-            <rect x={this.props.x}
-                  y={this.props.y}
-                  width={500-this.props.x}
+            <rect x={x}
+                  y={yRange(this.props.y)}
+                  width={500-xRange(this.props.x)}
                   height={height}
                   strokeWidth="1" stroke="black"
                   fill="none"/>

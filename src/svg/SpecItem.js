@@ -22,16 +22,19 @@ export default class SpecItem extends React.Component {
     }
 
     render() {
+        var {xRange, yRange} = this.props;
         var marginBottom = 50 + 25;
-        var stageY = (5 - this.props.stageLevel) * 100;
+        var levelHeight = 100 / 5;
+        var stageY = (5 - this.props.stageLevel) * yRange(levelHeight);
+        var x = xRange(this.props.x);
         return <g>
-            <rect x={this.props.x}
+            <rect x={x}
                   y={stageY - marginBottom}
                   width={this.props.width}
                   height={this.props.height}
                   strokeWidth="1" stroke="black"
                   fill="none"/>
-            <text x={this.props.x + this.props.width/2}
+            <text x={x + this.props.width/2}
                   y={stageY - marginBottom + this.props.height/2 + 5}
                   textAnchor="middle"
                   alignmentBaseline="central"
