@@ -79,16 +79,31 @@ class App extends React.Component {
                 }
                 return;
             }
+            this.setState({
+                processValue: this.state.processValue + 10
+            });
+
             // 2コづつ
             range(Math.min(specList.length, 2)).map(function (index) {
                 if (specList[index] && specList[index].stageLevel < 4) {
                     specList[index].stageLevel += randomUp();
                 }
             });
-            this.setState({
-                processValue: this.state.processValue + 10
-            });
         }, 1000);
+    }
+
+    onSubmit(event) {
+        event.preventDefault();
+        var value = React.findDOMNode(this.refs.inputSpecTitle).value;
+        specList.push({
+            name: value,
+            stageLevel: 0
+        });
+        React.findDOMNode(this.refs.inputSpecTitle).value = "";
+    }
+
+    onClickStart() {
+        this.start();
     }
 
     render() {
@@ -113,20 +128,30 @@ class App extends React.Component {
                              width={150}
                 />;
         });
-        return <svg className="App" viewBox="0 0 800 600"
-                    onClick={this.start.bind(this)}>
-            <title>TC39 Process</title>
-            <StageAxis xRange={xAxisRange} yRange={yAxisRange}/>
-            <StageArea xRange={xAreaRange} yRange={yAreaRange}/>
-            <YearAxis xRange={yearXRange} yRange={yearYRange}
-                      beginYear={this.state.beginYear}
-                      processValue={this.state.processValue}/>
-            <ECMAScript versionName={`ECMAScript ${this.state.beginYear}`}
-                        completeSpecList={completeSpecList}
-                        width={300} height={500}
-                        xRange={ECMAXRange} yRange={ECMAYRange}/>
-            {specs}
-        </svg>
+        return <div className="App">
+            <svg viewBox="0 0 800 600"
+                 onClick={this.start.bind(this)}>
+                <title>TC39 Process</title>
+                <StageAxis xRange={xAxisRange} yRange={yAxisRange}/>
+                <StageArea xRange={xAreaRange} yRange={yAreaRange}/>
+                <YearAxis xRange={yearXRange} yRange={yearYRange}
+                          beginYear={this.state.beginYear}
+                          processValue={this.state.processValue}/>
+                <ECMAScript versionName={`ECMAScript ${this.state.beginYear}`}
+                            completeSpecList={completeSpecList}
+                            width={300} height={500}
+                            xRange={ECMAXRange} yRange={ECMAYRange}/>
+                {specs}
+            </svg>
+            <div className="ControlApp">
+                <button onClick={this.onClickStart.bind(this)}>Start Process</button>
+                 |
+                <form onSubmit={this.onSubmit.bind(this)}>
+                    <input type="text" ref="inputSpecTitle"></input>
+                    <input type="submit" value="Add Proposal"></input>
+                </form>
+            </div>
+        </div>
     }
 }
 
