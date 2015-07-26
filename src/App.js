@@ -8,7 +8,10 @@ import SpecItem from "./svg/SpecItem"
 import YearAxis from "./svg/YearAxis"
 import ECMAScript from "./svg/ECMAScriptXXXX"
 import range from "array-range"
-var specList = [
+import querystring from "querystring"
+// ?reset
+var queries = querystring.parse(location.search.replace("?", ""));
+var specList = typeof queries.reset !== "undefined" ? [] : [
     {
         name: "Object.observe()",
         stageLevel: 0
@@ -52,7 +55,8 @@ class App extends React.Component {
         super(...args);
         this.state = {
             beginYear: 2015,
-            processValue: 0
+            processValue: 0,
+            specList: specList
         };
     }
 
@@ -63,15 +67,16 @@ class App extends React.Component {
         this.time = setInterval(()=> {
             if (this.state.processValue >= 100) {
                 // complete spec. and reset progress
-                completeSpecList = specList.filter(spec => {
+                completeSpecList = this.state.specList.filter(spec => {
                     return spec.stageLevel >= 4
                 });
-                specList = specList.filter(spec => {
+                var specList = this.state.specList.filter(spec => {
                     return spec.stageLevel < 4
                 });
                 this.setState({
                     beginYear: this.state.beginYear + 1,
-                    processValue: 0
+                    processValue: 0,
+                    specList: specList
                 });
                 // finish roop
                 if (specList.length === 0) {
@@ -84,9 +89,9 @@ class App extends React.Component {
             });
 
             // 2コづつ
-            range(Math.min(specList.length, 2)).map(function (index) {
-                if (specList[index] && specList[index].stageLevel < 4) {
-                    specList[index].stageLevel += randomUp();
+            range(Math.min(this.state.specList.length, 2)).map((index) => {
+                if (this.state.specList[index] && this.state.specList[index].stageLevel < 4) {
+                    this.state.specList[index].stageLevel += randomUp();
                 }
             });
         }, 1000);
@@ -95,9 +100,13 @@ class App extends React.Component {
     onSubmit(event) {
         event.preventDefault();
         var value = React.findDOMNode(this.refs.inputSpecTitle).value;
+        var specList = this.state.specList;
         specList.push({
             name: value,
             stageLevel: 0
+        });
+        this.setState({
+            specList: specList
         });
         React.findDOMNode(this.refs.inputSpecTitle).value = "";
     }
@@ -118,15 +127,16 @@ class App extends React.Component {
 
         var ECMAXRange = linear().domain(TenPercent).range([500, 800]);
         var ECMAYRange = linear().domain(TenPercent).range([0, 500]);
-        var specs = range(Math.min(specList.length, 2)).map(function (dummy, index) {
+        var specs = range(Math.min(this.state.specList.length, 2)).map((dummy, index) => {
             var xSpecItemRange = linear().domain(TenPercent).range([150 * (index + 1), 500]);
             var ySpecItemRange = linear().domain(TenPercent).range([0, 500]);
-            return <SpecItem key={specList[index].name}
-                             proposalName={specList[index].name}
-                             stageLevel={specList[index].stageLevel}
+            var specItem = this.state.specList[index];
+            return <SpecItem key={specItem.name}
+                             proposalName={specItem.name}
+                             stageLevel={specItem.stageLevel}
                              xRange={xSpecItemRange} yRange={ySpecItemRange}
                              width={150}
-                />;
+            />;
         });
         return <div className="App">
             <svg viewBox="0 0 800 600"
@@ -145,7 +155,7 @@ class App extends React.Component {
             </svg>
             <div className="ControlApp">
                 <button onClick={this.onClickStart.bind(this)}>Start Process</button>
-                 |
+                |
                 <form onSubmit={this.onSubmit.bind(this)}>
                     <input type="text" ref="inputSpecTitle"></input>
                     <input type="submit" value="Add Proposal"></input>
