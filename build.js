@@ -22655,6 +22655,7 @@ var App = (function (_React$Component) {
                     // finish roop
                     if (specList.length === 0) {
                         clearInterval(_this.time);
+                        _this.time = null;
                     }
                     return;
                 }

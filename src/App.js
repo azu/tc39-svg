@@ -81,6 +81,7 @@ class App extends React.Component {
                 // finish roop
                 if (specList.length === 0) {
                     clearInterval(this.time);
+                    this.time = null;
                 }
                 return;
             }
