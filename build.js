@@ -22471,16 +22471,33 @@ var App = (function (_React$Component) {
                     }
                     return;
                 }
+                _this.setState({
+                    processValue: _this.state.processValue + 10
+                });
+
                 // 2コづつ
                 (0, _arrayRange2["default"])(Math.min(specList.length, 2)).map(function (index) {
                     if (specList[index] && specList[index].stageLevel < 4) {
                         specList[index].stageLevel += randomUp();
                     }
                 });
-                _this.setState({
-                    processValue: _this.state.processValue + 10
-                });
             }, 1000);
+        }
+    }, {
+        key: "onSubmit",
+        value: function onSubmit(event) {
+            event.preventDefault();
+            var value = _react2["default"].findDOMNode(this.refs.inputSpecTitle).value;
+            specList.push({
+                name: value,
+                stageLevel: 0
+            });
+            _react2["default"].findDOMNode(this.refs.inputSpecTitle).value = "";
+        }
+    }, {
+        key: "onClickStart",
+        value: function onClickStart() {
+            this.start();
         }
     }, {
         key: "render",
@@ -22507,24 +22524,44 @@ var App = (function (_React$Component) {
                 });
             });
             return _react2["default"].createElement(
-                "svg",
-                { className: "App", viewBox: "0 0 800 600",
-                    onClick: this.start.bind(this) },
+                "div",
+                { className: "App" },
                 _react2["default"].createElement(
-                    "title",
-                    null,
-                    "TC39 Process"
+                    "svg",
+                    { viewBox: "0 0 800 600",
+                        onClick: this.start.bind(this) },
+                    _react2["default"].createElement(
+                        "title",
+                        null,
+                        "TC39 Process"
+                    ),
+                    _react2["default"].createElement(_svgStageAxis2["default"], { xRange: xAxisRange, yRange: yAxisRange }),
+                    _react2["default"].createElement(_svgStageArea2["default"], { xRange: xAreaRange, yRange: yAreaRange }),
+                    _react2["default"].createElement(_svgYearAxis2["default"], { xRange: yearXRange, yRange: yearYRange,
+                        beginYear: this.state.beginYear,
+                        processValue: this.state.processValue }),
+                    _react2["default"].createElement(_svgECMAScriptXXXX2["default"], { versionName: "ECMAScript " + this.state.beginYear,
+                        completeSpecList: completeSpecList,
+                        width: 300, height: 500,
+                        xRange: ECMAXRange, yRange: ECMAYRange }),
+                    specs
                 ),
-                _react2["default"].createElement(_svgStageAxis2["default"], { xRange: xAxisRange, yRange: yAxisRange }),
-                _react2["default"].createElement(_svgStageArea2["default"], { xRange: xAreaRange, yRange: yAreaRange }),
-                _react2["default"].createElement(_svgYearAxis2["default"], { xRange: yearXRange, yRange: yearYRange,
-                    beginYear: this.state.beginYear,
-                    processValue: this.state.processValue }),
-                _react2["default"].createElement(_svgECMAScriptXXXX2["default"], { versionName: "ECMAScript " + this.state.beginYear,
-                    completeSpecList: completeSpecList,
-                    width: 300, height: 500,
-                    xRange: ECMAXRange, yRange: ECMAYRange }),
-                specs
+                _react2["default"].createElement(
+                    "div",
+                    { className: "ControlApp" },
+                    _react2["default"].createElement(
+                        "button",
+                        { onClick: this.onClickStart.bind(this) },
+                        "Start Process"
+                    ),
+                    "|",
+                    _react2["default"].createElement(
+                        "form",
+                        { onSubmit: this.onSubmit.bind(this) },
+                        _react2["default"].createElement("input", { type: "text", ref: "inputSpecTitle" }),
+                        _react2["default"].createElement("input", { type: "submit", value: "Add Proposal" })
+                    )
+                )
             );
         }
     }]);
